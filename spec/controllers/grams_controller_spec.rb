@@ -166,8 +166,12 @@ RSpec.describe GramsController, type: :controller do
       user = FactoryBot.create(:user)
       sign_in user
 
-      post :create, params: { gram: { message: 'Hello!' } }
-      expect(response).to redirect_to root_path
+      post :create, params: {
+         gram: {
+           message: 'Hello!',
+           pictures: fixture_file_upload("/picture.png", 'image/png')
+         }
+       }
 
       gram = Gram.last
       expect(gram.message).to eq("Hello!")
